@@ -13,6 +13,8 @@ class AnimatedSprite(pygame.sprite.Sprite):
     current_loop: list[pygame.Surface]
     render_props: RenderProps
 
+    force_redraw: bool = False
+
     animation_finished = empty_func
 
     def __init__(self, data: AnimationData, default_tag: str, rect: tuple[int, int, int, int], *groups) -> None:
@@ -52,10 +54,11 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.timer.update(data.elapsed * self.tag_speeds.get(self.tag, 1))
         frame = self.current_frame % len(self.current_loop)
 
-        if frame != self._prev_frame or self.current_loop != self._prev_loop:
+        if frame != self._prev_frame or self.current_loop != self._prev_loop or self.force_redraw:
             self.image = self.render_props.apply(self.current_loop[frame])
             self.image = self.overlay(self.image)
             self._prev_frame, self._prev_loop = frame, self.current_loop
+            self.force_redraw = False
 
     def overlay(self, image):
         return image

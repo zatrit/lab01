@@ -38,6 +38,8 @@ class Unit(GlitchyDeath, PriorityAnimatedSprite):
     collision_groups: list[pygame.sprite.Group]
     bushes_group: pygame.sprite.Group
     velocity: Iterable[Union[int, float]]
+    p_brighten: float = 0
+    brighten: float = 0
 
     @property
     def hitting(self):
@@ -81,8 +83,13 @@ class Unit(GlitchyDeath, PriorityAnimatedSprite):
         super().update(data)
         self.unit_data.effects.update(data)
 
-        self.velocity = map(0.8.__mul__, velocity := tuple(self.velocity))
-        self.move(*velocity)
+        self.velocity = tuple(0.8 * a for a in self.velocity)
+        self.brighten = sum(map(abs, self.velocity))
+        self.move(*self.velocity)
+
+        if self.p_brighten != self.brighten:
+            self.force_redraw = True
+            self.p_brighten = self.brighten
 
         if self.moving:
             speed = self.unit_data.hit_speed \
@@ -163,6 +170,10 @@ class Unit(GlitchyDeath, PriorityAnimatedSprite):
         self.update_move_tag(True)
 
     def overlay(self, image: pygame.Surface):
+        brighten = min(int(32 * self.brighten), 255)
+        image.fill((brighten, brighten, brighten, 0),
+                        special_flags=pygame.BLEND_RGBA_ADD)
+
         if self.collides_bush:
             size = width, _ = image.get_size()
             image = image.subsurface((0, 0, width, 15))

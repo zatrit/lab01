@@ -24,7 +24,6 @@ class EffectsRender(pygame.sprite.Sprite):
         x += self.unit.rect[2] // 2
 
         if self.cached_n_effects != n_effects:
-            del self.image
             self.image = pygame.Surface(
                 (effect_w * n_effects, effect_h))
             # Делает чёрный цвет прозрачным
