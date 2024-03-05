@@ -1,0 +1,11 @@
+{
+    "text_box": {
+        "colours": {
+            "dark_bg": "#050914",
+            "text_shadow": "#00000000"
+        },
+        "misc": {
+            "border_width": "0"
+        }
+    }
+}

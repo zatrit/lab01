@@ -1,0 +1,18 @@
+{
+    "progress_bar": {
+        "colours": {
+            "filled_bar": "#D41E3C",
+            "unfilled_bar": "#35003B",
+            "normal_text": "#00000000"
+        }
+    },
+    "defaults": {
+        "colours": {
+            "text_shadow": "#00000000",
+            "normal_border": "#00000000",
+            "hovered_border": "#00000000",
+            "disabled_border": "#00000000",
+            "selected_border": "#00000000"
+        }
+    }
+}

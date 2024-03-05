@@ -1,0 +1,57 @@
+[[parts]]
+lines = [
+  "<b>[   0.000000]</b> lab01 tty initialized<br>",
+  "<b>[   0.000354]</b> fsck successed<br>",
+]
+delay = 0.35
+
+[[parts]]
+lines = [
+  "Mounting proc as /proc<br>",
+  "mount -t proc none /proc<br>",
+  "Mounting memes as /memes<br>",
+  "mount -t memes none /memes<br>",
+]
+delay = 0.0625
+
+[[parts]]
+lines = ["<b>[   0.000857]</b> Testing sound"]
+delay = 0.25
+
+[[parts]]
+lines = "#sound"
+delay = 1
+sound = "beep"
+
+[[parts]]
+lines = ["<b>[   0.002254]</b> loading maps"]
+delay = 0.25
+
+[[parts]]
+lines = "#ok"
+delay = 1
+sound = "beep"
+
+[[parts]]
+lines = ["<b>[   0.003502]</b> loading menu interface"]
+delay = 0.25
+
+[[parts]]
+lines = "#ok"
+delay = 1
+sound = "beep"
+
+[[parts]]
+delay = 0.25
+lines = ["<b>Password: </b><br>"]
+
+[[parts]]
+delay = 0.5
+sound = "printing"
+
+[[parts]]
+delay = 3.3
+lines = ["Logged in"]
+
+[[parts]]
+delay = 0.3

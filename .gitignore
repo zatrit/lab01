@@ -1,0 +1,12 @@
+**/__pycache__/
+.vscode/
+art/
+venv/
+.venv/
+.idea/
+_saves/
+config.toml
+**/build/
+cython/c_src/
+_build/
+dist/

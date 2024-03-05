@@ -1,0 +1,14 @@
+{
+    "button": {
+        "misc": {
+            "shape": "rounded_rectangle",
+            "shape_corner_radius": "30",
+            "border_width": "0",
+            "shadow_width": "0",
+            "state_transitions": {
+                "normal_hovered": "0.5",
+                "hovered_normal": "0.5"
+            }
+        }
+    }
+}
