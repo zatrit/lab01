@@ -1,3 +1,5 @@
 zopflipy
 py7zr
 argparse
+opencv-python
+numpy

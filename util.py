@@ -1,7 +1,7 @@
 from collections import deque
 from functools import lru_cache
 from itertools import cycle
-from typing import Optional
+from typing import Iterator, Optional
 
 from local_config import get_property
 
@@ -58,14 +58,14 @@ def play_sound(sound: Optional[pygame.mixer.Sound], volume=1., **play_args):
 
 
 class LoopedTimer:
-    def __init__(self, delays: list[float], callback) -> None:
+    def __init__(self, delays: Iterator[float], callback) -> None:
         self.cur_time = 0
         self.paused = False
         self.set_delays(delays)
         self.callback = callback
 
-    def set_delays(self, delays: list[float]):
-        self.delays = cycle(iter(delays))
+    def set_delays(self, delays: Iterator[float]):
+        self.delays = cycle(delays)
         self.cur_delay = next(self.delays)
 
     def update(self, elapsed: float):

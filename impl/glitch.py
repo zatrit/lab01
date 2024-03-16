@@ -5,8 +5,6 @@ from sprites import SpriteTimer
 import pygame
 import random
 
-from util import empty_func, play_sound
-
 DISAPEAR_SOUND = load_sound("assets/sound/disapeared.mp3")
 
 
@@ -28,7 +26,6 @@ class DeathAnimDummy(pygame.sprite.Sprite):
         del s
 
     def kill(self):
-        play_sound(DISAPEAR_SOUND, 0.1)
         super().kill()
 
 
@@ -43,14 +40,14 @@ class GlitchyDeath(pygame.sprite.Sprite):
 
     def kill(self):
         glitch(self.rect, self.overlay_group, self.timer_group,
-               self.glitchy_image(), empty_func)
+               self.glitchy_image())
         super().kill()
 
 
-def glitch(rect, group, timer_group, image, callback):
+def glitch(rect, group, timer_group, image, callback = None):
     dummy = DeathAnimDummy(rect, image, group)
 
     def timeout():
-        callback()
+        if callable(callback): callback()
         dummy.kill()
     SpriteTimer(1.75, timeout, timer_group)

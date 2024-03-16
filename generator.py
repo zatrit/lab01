@@ -191,7 +191,6 @@ class Generator():
 
         # fill the map
         # paint rooms
-
         for room in self.room_list:
             for b, c in product(range(room[2]), range(room[3])):
                 self.level[room[1] + c][room[0] + b] = '.'

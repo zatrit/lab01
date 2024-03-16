@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+# Скрипт для генерации виньетки на экране
+
 rows, cols = 135, 240
 color = 5, 9, 20, 255
 vignette = np.array(color * (rows * cols)).reshape((rows, cols, 4))

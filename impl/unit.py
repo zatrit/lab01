@@ -31,15 +31,34 @@ def create_hitbox(topleft, rect, offset=(0, 0)):
 
 
 class Unit(GlitchyDeath, PriorityAnimatedSprite):
+    """Спрайт абстрактного персонажа"""
+
     unit_data: UnitData
+    """Данные о персонаже"""
+
     moving: bool = False
+    """Двигается ли персонаж"""
+
     hitbox: tuple[int, int, int, int] = 3, 17, 11, 9
+    """Хитбокс для проверки столкновения со стенами"""
+
     attack_hitbox: tuple[int, int, int, int] = 0, 0, 17, 17
+    """Хитбокс, определяющий площадь атаки"""
+
     collision_groups: list[pygame.sprite.Group]
+    """Группа, с которой персонаж будет сталкиваться"""
+
     bushes_group: pygame.sprite.Group
+    """Группа, в которой персонаж скрывается за кустами"""
+
     velocity: Iterable[Union[int, float]]
+    """Дополнительная скорость, зависящая от удара"""
+
     p_brighten: float = 0
+    """Предыдущее значение яркости осветления"""
+
     brighten: float = 0
+    """Яркость осветления"""
 
     @property
     def hitting(self):
@@ -83,7 +102,7 @@ class Unit(GlitchyDeath, PriorityAnimatedSprite):
         super().update(data)
         self.unit_data.effects.update(data)
 
-        self.velocity = tuple(0.8 * a for a in self.velocity)
+        self.velocity = tuple(0.85 * a for a in self.velocity)
         self.brighten = sum(map(abs, self.velocity))
         self.move(*self.velocity)
 
@@ -170,10 +189,12 @@ class Unit(GlitchyDeath, PriorityAnimatedSprite):
         self.update_move_tag(True)
 
     def overlay(self, image: pygame.Surface):
+        # Осветляет персонажа, чтобы улучшить ощущение атак игроком
         brighten = min(int(32 * self.brighten), 255)
         image.fill((brighten, brighten, brighten, 0),
                         special_flags=pygame.BLEND_RGBA_ADD)
 
+        # Скрывает часть спрайта, чтобы показать объёмность кустов
         if self.collides_bush:
             size = width, _ = image.get_size()
             image = image.subsurface((0, 0, width, 15))
@@ -182,16 +203,17 @@ class Unit(GlitchyDeath, PriorityAnimatedSprite):
             image2.blit(image, (0, 0))
             image2.blit(BUSHES_OVERLAY, (4, 15))
             return image2
+
         return image
 
     def get_center(self) -> Iterable[int]:
-        """Возвращает центр хитбокса существа"""
+        """Возвращает центр хитбокса персонажа"""
         hitbox_center = (c + a + b // 2 for a,
                          b, c in zip(self.hitbox[:2], self.hitbox[2:], self.rect[:2]))
         return hitbox_center
 
     def get_cell(self) -> tuple[int, int]:
-        """Возвращает клетку существа на поле"""
+        """Возвращает клетку персонажа на поле"""
         return tuple(int(n / CELL_SIZE) for n in self.get_center())  # type: ignore
 
     def kill_hit_timer(self):

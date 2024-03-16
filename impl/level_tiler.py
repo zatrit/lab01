@@ -66,6 +66,7 @@ def tile_level(level_width, level_height, level_data, wall_group,
         if level_data[y][x] in ".GTt":
             tile = random.randint(0, len(GROUND.tiles) - 2)
             tile = tile if random.randint(0, 100) else 8
+            tile = tile if random.randint(0, 3) else 4
             Tile(tile, x, y, GROUND, tile_group)
         if current_tile in ".Tt":
             for tile in bushes_for_cell(level_data, x, y):

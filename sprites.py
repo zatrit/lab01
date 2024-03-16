@@ -7,7 +7,8 @@ from util import empty_func, foreach
 
 
 class Hitbox(pygame.sprite.Sprite):
-    """Хитбокс для вычислений движения юнитов и т.д."""
+    """Хитбокс для вычислений движения персонажей и т.д."""
+
     rect: pygame.Rect
 
     def __init__(self, rect, *groups):
@@ -31,6 +32,7 @@ class SpriteTimer(pygame.sprite.Sprite):
 
 class HackySpriteGroup(pygame.sprite.Group):
     """Реализация группы спрайтов для камеры из game.py"""
+
     offset: tuple[float, float]
 
     def __init__(self, *sprites) -> None:

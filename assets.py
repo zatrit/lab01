@@ -9,6 +9,7 @@ import pygame
 @dataclass
 class AnimationData:
     """Данные для анимации игрока и т.д."""
+
     image: pygame.Surface
     frames: list[pygame.Surface]
     durations: list[float]
@@ -17,6 +18,7 @@ class AnimationData:
     @staticmethod
     def from_json(meta: dict, image: pygame.Surface):
         """Загружает анимацию из файла, экспортируемого Aseprite"""
+
         durations = [frame["duration"] / 1000 for frame in meta["frames"]]
         frames = [image.subsurface(*frame["frame"].values())
                   for frame in meta["frames"]]
@@ -27,6 +29,7 @@ class AnimationData:
 
 def load_animation(path: str, image_ext=".png", meta_ext=".json") -> AnimationData:
     """Загружает анимацию по имени вместе с изображением"""
+
     path = os.path.join("assets/sprite", path)
     image = pygame.image.load(path + image_ext).convert_alpha()
     with open(path + meta_ext, "r") as file:

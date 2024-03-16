@@ -5,7 +5,8 @@ from dataclasses import dataclass
 
 @dataclass
 class UnitData:
-    """Все свойства юнита, модифицируются через эффекты"""
+    """Все свойства персонажа, модифицируются через эффекты"""
+
     effects: Effects = field(default_factory=Effects)
     health: int = 5
     max_health: int = 5

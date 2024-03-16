@@ -8,7 +8,7 @@ from impl.unit import Unit
 from sprites import Hitbox
 from util import empty_func, play_music, play_sound
 
-NEG_HALF_CAMERA_SIZE = tuple(map((.5).__mul__, map(int.__neg__, CAMERA_SIZE)))
+NEG_HALF_CAMERA_SIZE = tuple(-n // 2 for n in CAMERA_SIZE)
 WALKING_SOUND_ARGS = {"maxtime": 500, "volume": 0.5}
 
 GRASS_SOUND = load_sound("assets/sound/walking_grass.mp3")
@@ -16,7 +16,9 @@ CONCRETE_SOUND = load_sound("assets/sound/walking_concrete.mp3")
 
 
 class Player(Unit):
+    # Клавиши управления игроком
     keys: pygame.key.ScancodeWrapper
+    # Хитбокс для взаимодействия с окружающими объектами
     interaction_hitbox = (2, -10, 13, 15)
 
     def __init__(self, *groups, pos: tuple[int, int], collision_groups, bushes_group,

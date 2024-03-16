@@ -1,5 +1,6 @@
 from functools import lru_cache
 from itertools import product
+from math import copysign
 import random
 from typing import Iterable, Union
 
@@ -22,8 +23,12 @@ PICKUP_SOUND = load_sound("assets/sound/pickup.mp3")
 
 class Enemy(Unit):
     """Враг, имеющий искусственный интелект"""
+
     see_player: bool = False
+    """Видит ли враг игрока"""
+
     target_pos = None
+    """Точка, в которую враг стремится идти"""
 
     def __init__(self, *groups, pos: tuple[int, int], collision_groups, bushes_group, overlay_group, player_group, timer_group, player, grid) -> None:
         super().__init__(*groups, pos=pos, collision_groups=collision_groups,
@@ -59,7 +64,7 @@ class Enemy(Unit):
 
         target_direct = map(
             normalize, (a - b for a, b in zip(target_pos, self.get_cell())))
-        return target_direct
+        return target_direct # type: ignore
 
     def kill(self):
         play_sound(PICKUP_SOUND, 0.5)
@@ -82,6 +87,7 @@ def level_grid(level: list[str]):
     return Grid(matrix=matrix)
 
 
+# Кэширует результат, так как вычисление пути занимает много времени
 @lru_cache(128)
 def next_pos(grid: Grid, _from: tuple[int, int], to: tuple[int, int]):
     if not all(0 <= a < b for a, b in zip(_from, (grid.width, grid.height))):
@@ -95,5 +101,5 @@ def next_pos(grid: Grid, _from: tuple[int, int], to: tuple[int, int]):
     return path[1] if len(path) > 1 else None
 
 
-def normalize(n):
-    return int(n / max(abs(n), 1))
+def normalize(n: int) -> int:
+    return min(1, max(-1, n))
