@@ -18,6 +18,7 @@ sources = {s for s in glob("**/*.py", recursive=True)
            if not s.startswith(BUILD_DIR)}
 blacklist = {"optimize_sprites.py", "generate_vignette.py", "compile.py"}
 sources -= blacklist
+sources -= {s for s in sources if s.startswith("launcher")}
 
 SPACES = "                                       "
 
